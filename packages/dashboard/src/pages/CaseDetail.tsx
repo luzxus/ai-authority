@@ -1,57 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { api, type CaseDetail as CaseDetailData } from '../api/client';
 import './CaseDetail.css';
 
-// Mock case data
-const mockCase = {
-  id: 'CASE-001',
-  agentId: 'agent-abc123',
-  signalId: 'SIG-789',
-  status: 'voting',
-  createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-  assignedReviewers: ['reviewer-1', 'reviewer-2', 'reviewer-3', 'reviewer-4', 'reviewer-5'],
-  riskScore: {
-    overall: 0.78,
-    tier: 2,
-    dimensions: {
-      harm: 0.65,
-      persistence: 0.82,
-      autonomy: 0.91,
-      deception: 0.72,
-      evasion: 0.60,
-    },
-  },
-  evidence: [
-    {
-      id: 'EV-001',
-      type: 'threat_signal',
-      description: 'Initial detection signal with anomaly details',
-      submittedAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    },
-    {
-      id: 'EV-002',
-      type: 'behavior_log',
-      description: 'Behavioral analysis logs showing chained tool calls',
-      submittedAt: new Date(Date.now() - 1.5 * 60 * 60 * 1000),
-    },
-    {
-      id: 'EV-003',
-      type: 'reviewer_note',
-      description: 'Pattern matches known deceptive agent behavior',
-      submittedAt: new Date(Date.now() - 1 * 60 * 60 * 1000),
-    },
-  ],
-  votes: [
-    { reviewerId: 'reviewer-1', decision: 'throttle', rationale: 'Clear pattern of autonomous behavior exceeding thresholds.' },
-    { reviewerId: 'reviewer-2', decision: 'throttle', rationale: 'Agent shows persistent behavior across multiple sessions.' },
-    { reviewerId: 'reviewer-3', decision: 'advisory', rationale: 'Concerning but may be within acceptable bounds for this use case.' },
-  ],
-};
+interface Evidence {
+  id: string;
+  type: string;
+  description: string;
+  data?: {
+    summary?: string;
+    riskAssessment?: string;
+    recommendation?: string;
+    evidenceCited?: string[];
+    [key: string]: unknown;
+  };
+  collectedAt: string;
+  collectedBy: string;
+}
+
+interface TimelineEvent {
+  id: string;
+  timestamp: string;
+  type: string;
+  description: string;
+  actor: string;
+}
 
 export const CaseDetail: React.FC = () => {
   const { caseId } = useParams<{ caseId: string }>();
+  const [caseData, setCaseData] = useState<CaseDetailData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [voteDecision, setVoteDecision] = useState('');
   const [voteRationale, setVoteRationale] = useState('');
+
+  useEffect(() => {
+    if (!caseId) return;
+
+    const fetchCase = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await api.getCase(caseId);
+        setCaseData(data);
+      } catch (err) {
+        console.error('Failed to fetch case:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load case');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCase();
+  }, [caseId]);
 
   const handleVote = () => {
     if (!voteDecision || !voteRationale) {
@@ -61,6 +62,49 @@ export const CaseDetail: React.FC = () => {
     alert(`Vote submitted: ${voteDecision}\nRationale: ${voteRationale}`);
   };
 
+  // Map severity to tier
+  const getTier = (severity: string): number => {
+    const tierMap: Record<string, number> = { critical: 4, high: 3, medium: 2, low: 1 };
+    return tierMap[severity] || 1;
+  };
+
+  if (loading) {
+    return (
+      <div className="case-detail">
+        <header className="page-header">
+          <div className="header-nav">
+            <Link to="/cases" className="back-link">← Back to Cases</Link>
+          </div>
+        </header>
+        <div className="loading-state">Loading case details...</div>
+      </div>
+    );
+  }
+
+  if (error || !caseData) {
+    return (
+      <div className="case-detail">
+        <header className="page-header">
+          <div className="header-nav">
+            <Link to="/cases" className="back-link">← Back to Cases</Link>
+          </div>
+        </header>
+        <div className="error-state">
+          <h2>Error Loading Case</h2>
+          <p>{error || 'Case not found'}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const tier = getTier(caseData.severity);
+  const evidence = (caseData.evidence || []) as Evidence[];
+  const timeline = (caseData.timeline || []) as TimelineEvent[];
+
+  // Find analysis report in evidence
+  const analysisReport = evidence.find(e => e.type === 'analysis_report');
+  const otherEvidence = evidence.filter(e => e.type !== 'analysis_report');
+
   return (
     <div className="case-detail">
       <header className="page-header">
@@ -68,59 +112,122 @@ export const CaseDetail: React.FC = () => {
           <Link to="/cases" className="back-link">← Back to Cases</Link>
         </div>
         <div className="header-main">
-          <h1>{caseId}</h1>
-          <span className={`badge tier-${mockCase.riskScore.tier}`}>
-            TIER {mockCase.riskScore.tier}
+          <h1>{caseData.title || caseId}</h1>
+          <span className={`badge tier-${tier}`}>
+            TIER {tier}
           </span>
         </div>
-        <p className="page-subtitle">Agent: {mockCase.agentId}</p>
+        <p className="page-subtitle">Target: {caseData.targetId} ({caseData.targetType})</p>
       </header>
 
       <div className="case-content">
         <div className="main-column">
+          {/* Summary Card */}
+          <section className="card summary-card">
+            <h2>Summary</h2>
+            <p className="case-description">{caseData.description}</p>
+            {caseData.threatTypes && caseData.threatTypes.length > 0 && (
+              <div className="threat-types">
+                <strong>Threat Types: </strong>
+                {caseData.threatTypes.map((t: string) => (
+                  <span key={t} className="badge threat-type">{t.replace(/_/g, ' ')}</span>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* Analysis Report Card */}
+          {analysisReport && (
+            <section className="card analysis-card">
+              <h2>🔍 Analysis Report</h2>
+              <div className="analysis-content">
+                <div 
+                  className="analysis-description" 
+                  dangerouslySetInnerHTML={{ __html: formatMarkdown(analysisReport.description) }} 
+                />
+                
+                {analysisReport.data && (
+                  <>
+                    {analysisReport.data.riskAssessment && (
+                      <div className="analysis-section">
+                        <h3>Risk Assessment</h3>
+                        <p>{analysisReport.data.riskAssessment}</p>
+                      </div>
+                    )}
+                    
+                    {analysisReport.data.recommendation && (
+                      <div className="analysis-section recommendation">
+                        <h3>Recommendation</h3>
+                        <p>{analysisReport.data.recommendation}</p>
+                      </div>
+                    )}
+
+                    {analysisReport.data.evidenceCited && analysisReport.data.evidenceCited.length > 0 && (
+                      <div className="analysis-section">
+                        <h3>Evidence Cited</h3>
+                        <ul className="evidence-cited-list">
+                          {analysisReport.data.evidenceCited.map((e, i) => (
+                            <li key={i} dangerouslySetInnerHTML={{ __html: formatMarkdown(e) }} />
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className="analysis-meta">
+                <span>Generated by: {analysisReport.collectedBy}</span>
+                <span>{new Date(analysisReport.collectedAt).toLocaleString()}</span>
+              </div>
+            </section>
+          )}
+
           {/* Risk Score Card */}
           <section className="card">
             <h2>Risk Assessment</h2>
             <div className="risk-overview">
               <div className="overall-score">
-                <div className="score-value">{(mockCase.riskScore.overall * 100).toFixed(0)}%</div>
-                <div className="score-label">Overall Risk</div>
+                <div className="score-value">{(caseData.riskScore * 100).toFixed(0)}%</div>
+                <div className="score-label">Confidence Score</div>
               </div>
-              <div className="dimension-scores">
-                {Object.entries(mockCase.riskScore.dimensions).map(([key, value]) => (
-                  <div key={key} className="dimension">
-                    <div className="dimension-label">{key}</div>
-                    <div className="dimension-bar">
-                      <div
-                        className="dimension-fill"
-                        style={{ width: `${value * 100}%`, backgroundColor: getScoreColor(value) }}
-                      />
-                    </div>
-                    <div className="dimension-value">{(value * 100).toFixed(0)}%</div>
-                  </div>
-                ))}
+              <div className="risk-details">
+                <div className="risk-item">
+                  <span className="risk-label">Severity</span>
+                  <span className={`badge severity-${caseData.severity}`}>
+                    {caseData.severity.toUpperCase()}
+                  </span>
+                </div>
+                <div className="risk-item">
+                  <span className="risk-label">Category</span>
+                  <span className={`badge category-${caseData.category}`}>
+                    {caseData.category}
+                  </span>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* Evidence Card */}
+          {/* Raw Evidence Card */}
           <section className="card">
-            <h2>Evidence ({mockCase.evidence.length})</h2>
+            <h2>Raw Evidence ({otherEvidence.length})</h2>
             <div className="evidence-list">
-              {mockCase.evidence.map((ev) => (
+              {otherEvidence.map((ev) => (
                 <div key={ev.id} className="evidence-item">
                   <div className="evidence-header">
                     <span className="evidence-id">{ev.id}</span>
-                    <span className={`badge evidence-type-${ev.type.replace('_', '-')}`}>
-                      {ev.type.replace('_', ' ')}
+                    <span className={`badge evidence-type-${ev.type.replace(/_/g, '-')}`}>
+                      {ev.type.replace(/_/g, ' ')}
                     </span>
                   </div>
                   <p className="evidence-description">{ev.description}</p>
                   <span className="evidence-time">
-                    {ev.submittedAt.toLocaleTimeString()}
+                    {new Date(ev.collectedAt).toLocaleString()} • {ev.collectedBy}
                   </span>
                 </div>
               ))}
+              {otherEvidence.length === 0 && (
+                <p className="no-evidence">No additional evidence collected</p>
+              )}
             </div>
           </section>
 
@@ -163,49 +270,54 @@ export const CaseDetail: React.FC = () => {
           {/* Status Card */}
           <section className="card status-card">
             <h3>Status</h3>
-            <span className={`badge status-${mockCase.status.replace('_', '-')}`}>
-              {mockCase.status.replace('_', ' ')}
+            <span className={`badge status-${caseData.status.replace('_', '-')}`}>
+              {caseData.status.replace('_', ' ')}
             </span>
             <div className="status-info">
               <div className="info-row">
-                <span className="info-label">Created</span>
-                <span className="info-value">{mockCase.createdAt.toLocaleString()}</span>
+                <span className="info-label">Detected</span>
+                <span className="info-value">{new Date(caseData.detectedAt).toLocaleString()}</span>
               </div>
               <div className="info-row">
-                <span className="info-label">Signal ID</span>
-                <span className="info-value">{mockCase.signalId}</span>
+                <span className="info-label">Detected By</span>
+                <span className="info-value">{caseData.detectedBy}</span>
               </div>
+              {caseData.moltbookUsername && (
+                <div className="info-row">
+                  <span className="info-label">Moltbook User</span>
+                  <span className="info-value">
+                    <a 
+                      href={`https://www.moltbook.com/@${caseData.moltbookUsername}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      @{caseData.moltbookUsername}
+                    </a>
+                  </span>
+                </div>
+              )}
             </div>
           </section>
 
-          {/* Reviewers Card */}
-          <section className="card reviewers-card">
-            <h3>Assigned Reviewers</h3>
-            <div className="reviewer-list">
-              {mockCase.assignedReviewers.map((r) => {
-                const vote = mockCase.votes.find((v) => v.reviewerId === r);
-                return (
-                  <div key={r} className="reviewer-item">
-                    <span className="reviewer-name">{r}</span>
-                    {vote ? (
-                      <span className={`badge vote-${vote.decision}`}>{vote.decision}</span>
-                    ) : (
-                      <span className="badge pending">pending</span>
-                    )}
+          {/* Timeline Card */}
+          <section className="card timeline-card">
+            <h3>Timeline</h3>
+            <div className="timeline-list">
+              {timeline.map((event) => (
+                <div key={event.id} className="timeline-item">
+                  <div className="timeline-marker" />
+                  <div className="timeline-content">
+                    <span className={`badge timeline-type-${event.type}`}>{event.type}</span>
+                    <p>{event.description}</p>
+                    <span className="timeline-meta">
+                      {new Date(event.timestamp).toLocaleString()} • {event.actor}
+                    </span>
                   </div>
-                );
-              })}
-            </div>
-            <div className="vote-tally">
-              <h4>Vote Tally</h4>
-              <div className="tally-row">
-                <span>Votes cast:</span>
-                <span>{mockCase.votes.length} / 5</span>
-              </div>
-              <div className="tally-row">
-                <span>Quorum needed:</span>
-                <span>3</span>
-              </div>
+                </div>
+              ))}
+              {timeline.length === 0 && (
+                <p className="no-timeline">No timeline events</p>
+              )}
             </div>
           </section>
         </div>
@@ -213,6 +325,13 @@ export const CaseDetail: React.FC = () => {
     </div>
   );
 };
+
+// Simple markdown-like formatting
+function formatMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br/>');
+}
 
 function getScoreColor(score: number): string {
   if (score >= 0.8) return '#ef4444';

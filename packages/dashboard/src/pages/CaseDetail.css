@@ -296,3 +296,164 @@
   background-color: #f1f5f9;
   color: #64748b;
 }
+
+/* Analysis Report Card */
+.analysis-card {
+  border-left: 4px solid #3b82f6;
+}
+
+.analysis-content {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.analysis-description {
+  padding: 16px;
+  background-color: var(--bg-primary);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.analysis-section {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.analysis-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.analysis-section.recommendation {
+  border-left: 3px solid #f59e0b;
+  background-color: #fefce8;
+}
+
+.evidence-cited-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.evidence-cited-list li {
+  margin-bottom: 8px;
+}
+
+.analysis-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Summary Card */
+.summary-card .case-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.threat-types {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.badge.threat-type {
+  background-color: #fee2e2;
+  color: #dc2626;
+  text-transform: capitalize;
+}
+
+/* Risk Details */
+.risk-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.risk-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.risk-label {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.badge.severity-critical { background-color: #dc2626; color: white; }
+.badge.severity-high { background-color: #f59e0b; color: white; }
+.badge.severity-medium { background-color: #eab308; color: #1e1e1e; }
+.badge.severity-low { background-color: #22c55e; color: white; }
+
+.badge.category-malicious { background-color: #dc2626; color: white; }
+.badge.category-suspicious { background-color: #f59e0b; color: white; }
+.badge.category-negligent { background-color: #eab308; color: #1e1e1e; }
+.badge.category-unknown { background-color: #64748b; color: white; }
+
+/* Timeline */
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  position: relative;
+}
+
+.timeline-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-content p {
+  font-size: 13px;
+  margin: 4px 0;
+  color: var(--text-primary);
+}
+
+.timeline-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.no-evidence,
+.no-timeline {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Loading & Error States */
+.loading-state,
+.error-state {
+  padding: 48px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.error-state h2 {
+  color: #dc2626;
+  margin-bottom: 8px;
+}

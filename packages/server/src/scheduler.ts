@@ -8,6 +8,7 @@
 import * as cron from 'node-cron';
 import {
   MoltbookClient,
+  generateThreatReport,
   type MoltbookThreatSignal,
 } from '@ai-authority/federation';
 import { generateSecureId } from '@ai-authority/core';
@@ -392,44 +393,72 @@ export class ScanScheduler {
    * Create a case from a threat signal and dispatch to agents.
    */
   private createCaseFromSignal(signal: MoltbookThreatSignal, caseId: string): void {
+    // Extract matched text from evidence for report generation
+    const matchedText = signal.evidence
+      .map(e => typeof e.data === 'string' ? e.data : '')
+      .filter(Boolean)
+      .join(' | ') || signal.description;
+
+    // Generate human-readable threat report
+    const report = generateThreatReport(signal, matchedText);
+
     const caseInput: CaseInput = {
       id: caseId,
       title: `Moltbook: ${signal.agentUsername} - ${signal.type.replace(/_/g, ' ')}`,
-      description: signal.description || signal.evidence.map(e => `${e.type}: ${e.description}`).join('\n'),
+      description: report.summary,  // Use report summary as case description
       severity: signal.severity,
       status: signal.severity === 'critical' ? 'investigating' : 'open',
       category: this.signalTypeToCategory(signal.type),
       targetId: signal.agentUsername,
       targetType: 'moltbook_agent',
       detectedAt: signal.detectedAt,
-      detectedBy: 'scan-scheduler',
+      detectedBy: 'moltbook-scanner',
       riskScore: signal.confidence,
       moltbookUsername: signal.agentUsername,
       threatTypes: [signal.type],
     };
 
-    const evidence: EvidenceInput[] = [{
-      id: generateSecureId().slice(0, 8),
-      type: signal.type,
-      description: signal.evidence.map(e => `${e.type}: ${e.description}`).join('; '),
-      data: {
-        confidence: signal.confidence,
-        evidence: signal.evidence,
-        sourceId: signal.sourceId,
-        sourceType: signal.sourceType,
-        relatedAgents: signal.relatedAgents,
-        indicators: signal.indicators,
+    // Create evidence entries with detailed report analysis
+    const evidence: EvidenceInput[] = [
+      // Primary analysis report
+      {
+        id: generateSecureId().slice(0, 8),
+        type: 'analysis_report',
+        description: report.analysis,
+        data: {
+          summary: report.summary,
+          riskAssessment: report.riskAssessment,
+          recommendation: report.recommendation,
+          evidenceCited: report.evidenceCited,
+          generatedBy: 'moltbook-scanner',
+        },
+        collectedAt: signal.detectedAt,
+        collectedBy: 'moltbook-scanner',
       },
-      collectedAt: signal.detectedAt,
-      collectedBy: 'scan-scheduler',
-    }];
+      // Raw signal evidence
+      {
+        id: generateSecureId().slice(0, 8),
+        type: signal.type,
+        description: `Raw detection data: ${matchedText.slice(0, 200)}${matchedText.length > 200 ? '...' : ''}`,
+        data: {
+          confidence: signal.confidence,
+          evidence: signal.evidence,
+          sourceId: signal.sourceId,
+          sourceType: signal.sourceType,
+          relatedAgents: signal.relatedAgents,
+          indicators: signal.indicators,
+        },
+        collectedAt: signal.detectedAt,
+        collectedBy: 'moltbook-scanner',
+      },
+    ];
 
     const timeline: TimelineEventInput[] = [{
       id: generateSecureId().slice(0, 8),
       timestamp: signal.detectedAt,
       type: 'detected',
-      description: `Threat detected by scheduled scan: ${signal.type}`,
-      actor: 'scan-scheduler',
+      description: `Threat detected: ${report.summary}`,
+      actor: 'moltbook-scanner',
     }];
 
     try {

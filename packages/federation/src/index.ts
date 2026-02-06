@@ -243,6 +243,7 @@ export {
   type ThreatEvidence,
   type ThreatIndicator,
   type DetectionPattern,
+  type ThreatReport,
   // Semantic analysis types
   type SemanticAnalysisResult,
   type SemanticIntent,
@@ -257,4 +258,5 @@ export {
   // Utilities
   createMoltbookDataSource,
   mapToStandardThreatSignal,
+  generateThreatReport,
 } from './moltbook.js';
