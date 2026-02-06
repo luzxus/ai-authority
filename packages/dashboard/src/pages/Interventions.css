@@ -1,0 +1,144 @@
+.interventions-page {
+  max-width: 1000px;
+}
+
+.interventions-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tier-1-summary {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+}
+
+.tier-2-summary {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.tier-3-summary {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+}
+
+.summary-value {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.tier-1-summary .summary-value { color: #1d4ed8; }
+.tier-2-summary .summary-value { color: #d97706; }
+.tier-3-summary .summary-value { color: #dc2626; }
+
+.summary-label {
+  font-size: 14px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+.interventions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.intervention-card {
+  padding: 20px;
+}
+
+.intervention-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.intervention-id {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.intervention-body {
+  margin-bottom: 16px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.agent-id {
+  font-family: monospace;
+}
+
+.appeal-warning {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #fef3c7;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #92400e;
+}
+
+.intervention-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.intervention-actions button {
+  padding: 8px 16px;
+}
+
+/* Status badges */
+.badge.status-pending {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.badge.status-active {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.badge.status-appealed {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.badge.status-reversed {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+
+.badge.status-expired {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+}

@@ -1,0 +1,399 @@
+.audits-page {
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  margin: 0 0 0.5rem;
+  color: #1a1a2e;
+}
+
+.page-subtitle {
+  color: #666;
+  margin: 0;
+}
+
+/* Summary Cards */
+.audits-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.summary-card.compliant .summary-value {
+  color: #22c55e;
+}
+
+.summary-card.violations .summary-value {
+  color: #ef4444;
+}
+
+.summary-card.rate .summary-value {
+  color: #3b82f6;
+}
+
+.summary-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Policies Section */
+.policies-section {
+  margin-bottom: 2rem;
+}
+
+.policies-section h2 {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.policies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.policy-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.policy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.policy-name {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.policy-rate {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.policy-rate.good {
+  color: #22c55e;
+}
+
+.policy-rate.warning {
+  color: #f59e0b;
+}
+
+.policy-rate.bad {
+  color: #ef4444;
+}
+
+.policy-desc {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+
+.policy-meta {
+  margin-bottom: 0.5rem;
+}
+
+.consensus-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: #f3f4f6;
+  color: #374151;
+  border-radius: 4px;
+}
+
+.compliance-bar {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.compliance-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.compliance-fill.good {
+  background: #22c55e;
+}
+
+.compliance-fill.warning {
+  background: #f59e0b;
+}
+
+.compliance-fill.bad {
+  background: #ef4444;
+}
+
+/* Filters */
+.audits-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-weight: 500;
+  color: #666;
+}
+
+.filter-group select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.875rem;
+}
+
+/* Audit Cards */
+.audits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.audit-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #e2e8f0;
+}
+
+.audit-card.result-compliant {
+  border-left-color: #22c55e;
+}
+
+.audit-card.result-violation {
+  border-left-color: #ef4444;
+}
+
+.audit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.audit-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.audit-id {
+  font-family: 'SF Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.result-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.result-badge.compliant {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.result-badge.violation {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.severity-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.severity-badge.severity-low {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.severity-badge.severity-medium {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.severity-badge.severity-high {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.severity-badge.severity-critical {
+  background: #450a0a;
+  color: #fecaca;
+}
+
+.audit-time {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Audit Details */
+.audit-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem 2rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.detail-value {
+  font-size: 0.875rem;
+  color: #1a1a2e;
+  font-weight: 500;
+}
+
+.detail-value.mono {
+  font-family: 'SF Mono', monospace;
+}
+
+/* Verification */
+.audit-verification {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.verification-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.verification-label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.verification-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.verification-value.verified {
+  color: #22c55e;
+}
+
+.verification-value.failed {
+  color: #ef4444;
+}
+
+.signatures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.signatures-label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.signature-badge {
+  padding: 0.25rem 0.5rem;
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-family: 'SF Mono', monospace;
+}
+
+/* Violation Reason */
+.violation-reason {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+
+.violation-icon {
+  font-size: 1.25rem;
+}
+
+@media (max-width: 1200px) {
+  .audits-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .audits-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-details {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

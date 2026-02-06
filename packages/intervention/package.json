@@ -1,0 +1,31 @@
+{
+  "name": "@ai-authority/intervention",
+  "version": "0.1.0",
+  "description": "Graduated intervention system with advisory, throttle, and revoke tiers",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo 'No tests yet'",
+    "lint": "eslint src/",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ai-authority/core": "workspace:*",
+    "@ai-authority/adjudication": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

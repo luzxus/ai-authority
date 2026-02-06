@@ -1,0 +1,456 @@
+.forensics-page {
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  margin: 0 0 0.5rem;
+  color: #1a1a2e;
+}
+
+.page-subtitle {
+  color: #666;
+  margin: 0;
+}
+
+/* Summary Cards */
+.forensics-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.summary-card.alert {
+  border: 2px solid #ef4444;
+}
+
+.summary-card.alert .summary-value {
+  color: #ef4444;
+}
+
+.summary-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Techniques Section */
+.forensics-techniques {
+  margin-bottom: 2rem;
+}
+
+.forensics-techniques h2 {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.techniques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.technique-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.technique-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.technique-name {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.technique-rate {
+  font-weight: 600;
+  color: #22c55e;
+}
+
+.technique-desc {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+
+.technique-bar {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.technique-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 2px;
+}
+
+/* Filters */
+.forensics-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-weight: 500;
+  color: #666;
+}
+
+.filter-group select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.875rem;
+}
+
+/* Forensic Cases List */
+.forensics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.forensic-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #e2e8f0;
+}
+
+.forensic-card.status-completed {
+  border-left-color: #22c55e;
+}
+
+.forensic-card.status-in_progress {
+  border-left-color: #3b82f6;
+}
+
+.forensic-card.status-pending {
+  border-left-color: #9ca3af;
+}
+
+.forensic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.forensic-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.case-id {
+  font-family: 'SF Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge.in_progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-badge.pending {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.agent-target {
+  font-size: 0.875rem;
+  color: #666;
+  font-family: 'SF Mono', monospace;
+}
+
+/* Forensic Sections */
+.forensic-section {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.forensic-section:last-of-type {
+  border-bottom: none;
+}
+
+.forensic-section h4 {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Attribution Info */
+.attribution-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.confidence-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.confidence-label {
+  font-size: 0.875rem;
+  color: #1a1a2e;
+  font-weight: 500;
+}
+
+.confidence-bar {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border-radius: 4px;
+}
+
+.origin-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.origin-label {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.origin-value {
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.version-badge {
+  padding: 0.125rem 0.5rem;
+  background: #f3f4f6;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: 'SF Mono', monospace;
+}
+
+.fingerprints {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fingerprint-label {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.fingerprint-tag {
+  padding: 0.25rem 0.5rem;
+  background: #ede9fe;
+  color: #6d28d9;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: 'SF Mono', monospace;
+}
+
+/* Obfuscation */
+.obfuscation-alert {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #fef2f2;
+  border-radius: 8px;
+}
+
+.evasion-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.evasion-label {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.evasion-value {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.evasion-value.high {
+  color: #dc2626;
+}
+
+.evasion-value.medium {
+  color: #f59e0b;
+}
+
+.evasion-value.low {
+  color: #22c55e;
+}
+
+.techniques-detected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.technique-tag {
+  padding: 0.25rem 0.5rem;
+  background: #f3f4f6;
+  color: #374151;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.technique-tag.danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.obfuscation-clear {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.clear-icon {
+  font-size: 1.25rem;
+}
+
+/* Findings */
+.findings-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.findings-list li {
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* Pending */
+.pending-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.pending-icon {
+  font-size: 1.5rem;
+}
+
+/* Footer */
+.forensic-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.techniques-used {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.timing {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+@media (max-width: 1200px) {
+  .forensics-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .forensics-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .forensic-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .forensic-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}

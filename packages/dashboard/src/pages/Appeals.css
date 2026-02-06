@@ -1,0 +1,218 @@
+.appeals-page {
+  max-width: 1000px;
+}
+
+.appeals-stats {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-item .stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.stat-item .stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.appeals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.appeal-card {
+  padding: 20px;
+}
+
+.appeal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.appeal-id {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.appeal-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.appeal-body h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.grounds-section {
+  margin-bottom: 16px;
+}
+
+.grounds-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ground-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #e0e7ff;
+  color: #4f46e5;
+  border-radius: 4px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.statement-section {
+  margin-bottom: 16px;
+}
+
+.statement-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--background);
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.timeline-section {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 16px;
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeline-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.timeline-value {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.timeline-value.urgent {
+  color: var(--danger);
+}
+
+.urgent-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 6px;
+  background-color: var(--danger);
+  color: white;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.decision-section {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--background);
+  border-radius: 6px;
+}
+
+.decision-outcome {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.outcome-grant {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.outcome-deny {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.outcome-partial {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.decision-rationale {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.decision-time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.appeal-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+}
+
+.appeal-actions button {
+  padding: 8px 16px;
+}
+
+button.success {
+  background-color: var(--success);
+  color: white;
+}
+
+/* Status badges */
+.badge.status-pending {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.badge.status-under-review {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.badge.status-granted {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.badge.status-denied {
+  background-color: #fee2e2;
+  color: #dc2626;
+}

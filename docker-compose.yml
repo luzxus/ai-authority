@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  dashboard:
+    build:
+      context: .
+      target: dashboard
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    networks:
+      - ai-authority
+
+  api:
+    build:
+      context: .
+      target: api
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - FEDERATION_NODE_ID=node-001
+      - LOG_LEVEL=info
+    volumes:
+      - audit-logs:/app/data/audit
+    networks:
+      - ai-authority
+
+  # Development mode - mounts source code
+  dev:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+      - "4000:4000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/packages/*/node_modules
+    environment:
+      - NODE_ENV=development
+    command: pnpm dev
+    networks:
+      - ai-authority
+
+  # Federation node for multi-node testing
+  federation-node-1:
+    build:
+      context: .
+      target: api
+    environment:
+      - NODE_ENV=production
+      - FEDERATION_NODE_ID=node-001
+      - FEDERATION_PORT=5001
+      - PEERS=node-002:5002,node-003:5003
+    ports:
+      - "5001:5001"
+    networks:
+      - ai-authority
+
+  federation-node-2:
+    build:
+      context: .
+      target: api
+    environment:
+      - NODE_ENV=production
+      - FEDERATION_NODE_ID=node-002
+      - FEDERATION_PORT=5002
+      - PEERS=node-001:5001,node-003:5003
+    ports:
+      - "5002:5002"
+    networks:
+      - ai-authority
+
+  federation-node-3:
+    build:
+      context: .
+      target: api
+    environment:
+      - NODE_ENV=production
+      - FEDERATION_NODE_ID=node-003
+      - FEDERATION_PORT=5003
+      - PEERS=node-001:5001,node-002:5002
+    ports:
+      - "5003:5003"
+    networks:
+      - ai-authority
+
+networks:
+  ai-authority:
+    driver: bridge
+
+volumes:
+  audit-logs:

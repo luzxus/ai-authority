@@ -1,0 +1,298 @@
+.case-detail {
+  max-width: 1200px;
+}
+
+.header-nav {
+  margin-bottom: 16px;
+}
+
+.back-link {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.case-content {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+}
+
+.main-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card h2,
+.card h3 {
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Risk Assessment */
+.risk-overview {
+  display: flex;
+  gap: 32px;
+}
+
+.overall-score {
+  text-align: center;
+  padding: 16px;
+  background: var(--background);
+  border-radius: 8px;
+}
+
+.score-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.score-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.dimension-scores {
+  flex: 1;
+}
+
+.dimension {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.dimension-label {
+  width: 80px;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.dimension-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dimension-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.dimension-value {
+  width: 40px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Evidence */
+.evidence-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.evidence-item {
+  padding: 12px;
+  background: var(--background);
+  border-radius: 6px;
+}
+
+.evidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.evidence-id {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.evidence-description {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.evidence-time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Voting */
+.voting-card {
+  border: 2px solid var(--primary);
+}
+
+.vote-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.vote-option {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: capitalize;
+  transition: all 0.2s;
+}
+
+.vote-option:hover {
+  border-color: var(--primary);
+}
+
+.vote-option.selected {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.vote-option input {
+  display: none;
+}
+
+.rationale-input label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.rationale-input textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.vote-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  font-size: 16px;
+}
+
+/* Side Column */
+.status-card .badge {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.status-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.info-label {
+  color: var(--text-muted);
+}
+
+.info-value {
+  font-weight: 500;
+}
+
+.reviewer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.reviewer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: var(--background);
+  border-radius: 4px;
+}
+
+.reviewer-name {
+  font-size: 13px;
+}
+
+.vote-tally {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.vote-tally h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.tally-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* Vote badges */
+.badge.vote-throttle {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.badge.vote-advisory {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.badge.vote-revoke {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.badge.pending {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
